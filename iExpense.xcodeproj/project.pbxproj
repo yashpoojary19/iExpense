@@ -14,6 +14,7 @@
 		B615375D26FDFC6700003E23 /* iExpenseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B615375C26FDFC6700003E23 /* iExpenseTests.swift */; };
 		B615376726FDFC6700003E23 /* iExpenseUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B615376626FDFC6700003E23 /* iExpenseUITests.swift */; };
 		B615376926FDFC6700003E23 /* iExpenseUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B615376826FDFC6700003E23 /* iExpenseUITestsLaunchTests.swift */; };
+		B6923C592704991F0091AC5F /* AddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6923C582704991F0091AC5F /* AddView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		B615376226FDFC6700003E23 /* iExpenseUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iExpenseUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B615376626FDFC6700003E23 /* iExpenseUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iExpenseUITests.swift; sourceTree = "<group>"; };
 		B615376826FDFC6700003E23 /* iExpenseUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iExpenseUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		B6923C582704991F0091AC5F /* AddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +98,7 @@
 			children = (
 				B615374B26FDFC6300003E23 /* iExpenseApp.swift */,
 				B615374D26FDFC6300003E23 /* ContentView.swift */,
+				B6923C582704991F0091AC5F /* AddView.swift */,
 				B615374F26FDFC6700003E23 /* Assets.xcassets */,
 				B615375126FDFC6700003E23 /* Preview Content */,
 			);
@@ -259,6 +262,7 @@
 			files = (
 				B615374E26FDFC6300003E23 /* ContentView.swift in Sources */,
 				B615374C26FDFC6300003E23 /* iExpenseApp.swift in Sources */,
+				B6923C592704991F0091AC5F /* AddView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
