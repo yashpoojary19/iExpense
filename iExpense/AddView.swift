@@ -15,6 +15,7 @@ struct AddView: View {
     @State private var name = ""
     @State private var type = "Personal"
     @State private var amount = ""
+    @State private var isShowing = false
     
     static let types = ["Personal", "Business"]
     
@@ -39,11 +40,16 @@ struct AddView: View {
                     let item = ExpenseItem(name: name, type: type, amount: actualAmount)
                     expenses.items.append(item)
                     presentationMode.wrappedValue.dismiss()
+                } else {
+                        isShowing = true
                 }
             }
                                     
             
             )
+            .alert(isPresented: $isShowing) {
+                Alert(title: Text("Not acceptable"), message: Text("We cannot accept that value"), dismissButton: .default(Text("Okay")))
+            }
         }
     }
 }

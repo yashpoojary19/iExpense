@@ -40,6 +40,7 @@ class Expenses: ObservableObject {
     }
 }
 
+
 struct ContentView: View {
     @ObservedObject var expenses = Expenses()
     @State private var showingAddExpense = false
@@ -56,6 +57,7 @@ struct ContentView: View {
                         }
                         Spacer()
                         Text("$\(item.amount)")
+                            .modifier(styledAmount(amount: item.amount))
                     }
                 }
                 .onDelete(perform: removeRows)
@@ -71,13 +73,51 @@ struct ContentView: View {
             .sheet(isPresented: $showingAddExpense) {
                 AddView(expenses: expenses)
             }
+            .navigationBarItems(leading: EditButton())
         }
     }
     
     func removeRows(at offset: IndexSet) {
         expenses.items.remove(atOffsets: offset)
+
+    }
+    
+    
+}
+
+struct styledAmount: ViewModifier {
+    let amount: Int
+    
+    func body(content: Content) -> some View {
+        content
+            .foregroundColor(getColor())
+            .font(getFont())
+    }
+    
+    func getColor() -> Color {
+        if amount < 10 {
+            return Color.red
+        } else if amount < 100 {
+            return Color.blue
+        } else {
+            return Color.green
+        }
+    }
+    
+    func getFont() -> Font {
+        if amount < 10 {
+            return Font.caption
+        } else if amount < 100 {
+            return Font.largeTitle
+        } else {
+            return Font.title
+        }
     }
 }
+
+
+
+
 
 
 struct ContentView_Previews: PreviewProvider {
@@ -85,7 +125,6 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
-
 
 
 //struct ContentView: View {
