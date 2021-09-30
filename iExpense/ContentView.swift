@@ -5,13 +5,10 @@
 //  Created by Yash Poojary on 24/09/21.
 //
 
-//
-
-
 import SwiftUI
 
 
-struct ExpenseItem: Identifiable {
+struct ExpenseItem: Identifiable, Codable {
     var id = UUID()
     var name: String
     var type: String
@@ -19,45 +16,75 @@ struct ExpenseItem: Identifiable {
 }
 
 class Expenses: ObservableObject {
-    @Published var items = [ExpenseItem]()
+    @Published var items = [ExpenseItem]() {
+        didSet {
+            let encoder = JSONEncoder()
+            
+            if let encoded = try? encoder.encode(items) {
+                UserDefaults.standard.set(encoded, forKey: "Items")
+            }
+        }
+    }
+    
+    init() {
+        if let items = UserDefaults.standard.data(forKey: "Items") {
+            let decoder = JSONDecoder()
+            
+            if let decoded = try? decoder.decode([ExpenseItem].self, from: items) {
+                self.items = decoded
+                return
+            }
+        }
+        
+        items = []
+    }
 }
 
-
 struct ContentView: View {
-    @ObservedObject private var expenses = Expenses()
-    @State private var isShowing = false
+    @ObservedObject var expenses = Expenses()
+    @State private var showingAddExpense = false
     
     var body: some View {
         NavigationView {
-            List {
+            List{
                 ForEach(expenses.items) { item in
-                    Text(item.name)
+                    HStack {
+                        VStack(alignment: .leading) {
+                            Text(item.name)
+                                .font(.headline)
+                            Text(item.type)
+                        }
+                        Spacer()
+                        Text("$\(item.amount)")
+                    }
                 }
                 .onDelete(perform: removeRows)
             }
             .navigationBarTitle("iExpense")
             .navigationBarItems(trailing:
             Button(action: {
-                isShowing = true
+                showingAddExpense = true
             }) {
                 Image(systemName: "plus")
             }
             )
-            .sheet(isPresented: $isShowing) {
+            .sheet(isPresented: $showingAddExpense) {
                 AddView(expenses: expenses)
             }
         }
-        
     }
     
-    func removeRows(at offset: IndexSet){
+    func removeRows(at offset: IndexSet) {
         expenses.items.remove(atOffsets: offset)
     }
 }
 
 
-
-
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+    }
+}
 
 
 
@@ -78,11 +105,58 @@ struct ContentView: View {
 //}
 
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
-}
+
+
+
+//
+//import SwiftUI
+//
+//
+//struct ExpenseItem: Identifiable {
+//    var id = UUID()
+//    var name: String
+//    var type: String
+//    var amount: Int
+//}
+//
+//class Expenses: ObservableObject {
+//    @Published var items = [ExpenseItem]()
+//}
+//
+//
+//struct ContentView: View {
+//    @ObservedObject private var expenses = Expenses()
+//    @State private var isShowing = false
+//
+//    var body: some View {
+//        NavigationView {
+//            List {
+//                ForEach(expenses.items) { item in
+//                    Text(item.name)
+//                }
+//                .onDelete(perform: removeRows)
+//            }
+//            .navigationBarTitle("iExpense")
+//            .navigationBarItems(trailing:
+//            Button(action: {
+//                isShowing = true
+//            }) {
+//                Image(systemName: "plus")
+//            }
+//            )
+//            .sheet(isPresented: $isShowing) {
+//                AddView(expenses: expenses)
+//            }
+//        }
+//
+//    }
+//
+//    func removeRows(at offset: IndexSet){
+//        expenses.items.remove(atOffsets: offset)
+//    }
+//}
+//
+
 
 //struct ContentView: View {
 //    @State private var numbers = [Int]()
